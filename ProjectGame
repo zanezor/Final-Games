@@ -1,0 +1,43 @@
+public abstract class ProjectGame{
+    
+    public boolean Solver(ProjectGame g, PuzzleButton[] emptySpots, int[]possibleValues, int x){
+
+	if(x== emptySpots.length){
+	    return g.checkConstraints();
+	}
+  
+	for(int i=0; i<possibleValues.length; i++){
+	    emptySpots[x].setValue(possibleValues[i]);
+	    boolean check = g.checkConstraints();
+	    if(check==true){
+		if(Solver(g, emptySpots, possibleValues, x+1)){
+		    return true;
+		}
+	    }
+	}
+	emptySpots[x].setValue(0);
+	return false;
+				  
+    }
+
+    public int[][] getStartLayout(){
+	return new int[0][0];
+    }
+
+    public PuzzleButton[][] getButtonArray(){
+	return new PuzzleButton[0][0];
+    }
+
+    public int[] getPossibleValues(){
+	return new int[0];
+    }
+
+    public PuzzleButton[] getEmpty(){
+	return new PuzzleButton[0];
+    }
+
+    public boolean checkConstraints(){
+	return true;
+    }
+}
+
