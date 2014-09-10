@@ -1,0 +1,19 @@
+import java.awt.*;
+
+
+public class ProjectRun {
+	
+    public static void main(String[] args) {
+		
+       	MenuFrame frame = new MenuFrame();
+	frame.init();
+	frame.repaint();	
+	frame.pack();
+	frame.setPreferredSize(new Dimension(800,000));
+	frame.setVisible(true);
+
+
+    }
+
+	
+}
