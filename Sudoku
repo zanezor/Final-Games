@@ -1,0 +1,176 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.awt.*;
+import javax.swing.*;
+
+public class Sudoku extends ProjectGame {
+    private JPanel gamePanel;
+    private int height=9;
+    private int width=9;
+    private int[][] startLayout = {
+	{9,0,0,0,3,4,0,2,0},
+	{0,1,0,0,0,0,0,0,0},
+	{0,4,0,0,0,6,7,0,0},
+	{7,0,0,8,0,0,3,0,0},
+	{0,9,8,0,0,0,4,6,0},
+	{0,0,5,0,0,9,0,0,8},
+	{0,0,3,5,0,0,0,4,0},
+	{0,0,0,0,0,0,0,8,0},
+	{0,7,0,4,1,0,0,0,3}
+	}; 
+
+    private SudokuButton[][] buttonArray = new SudokuButton[9][9];
+    private SudokuButton[] emptySpots;
+    private int[] possibleValues = {1,2,3,4,5,6,7,8,9};
+
+    public Sudoku(JPanel gamePanel){
+      	this.gamePanel = gamePanel;
+	this.createGameGrid();
+	this.createSpots();
+    }
+
+    public PuzzleButton[] getEmpty(){
+	return this.emptySpots;
+    }
+
+    public int[] getPossibleValues(){
+	return this.possibleValues;
+    }
+    
+    public PuzzleButton[][] getButtonArray(){
+	return buttonArray;
+    }
+
+    public int[][] getStartLayout(){
+	return startLayout;
+    }
+
+
+    public void createSpots() {
+	int counter = 0;
+	for (int row=0; row<9; row++) {
+	    for(int col=0; col<9; col++) {		
+		if (buttonArray[row][col].getValue()==0) {
+		    counter++;
+		}
+	    }
+	}
+
+	emptySpots = new SudokuButton[counter];
+	
+	int counter2 = 0;
+	for (int row=0; row<9; row++){
+	    for(int col=0; col<9; col++){		
+		if (buttonArray[row][col].getValue()==0){
+		    emptySpots[counter2]=buttonArray[row][col];
+		    counter2++;
+		}
+	    }
+	} 
+    }
+
+
+    public void createGameGrid(){
+	for (int row=0; row<9; row++) {
+	    for(int col=0; col<9; col++){ 
+		SudokuButton jb = new SudokuButton(startLayout[row][col]);
+		buttonArray[row][col] = jb;
+		gamePanel.add(jb);
+	    }
+	}
+
+       
+	Color x = Color.pink;
+	for(int boxStartRow = 0; boxStartRow < 7; boxStartRow += 3){
+	    for(int boxStartColumn = 0; boxStartColumn < 7; boxStartColumn += 3){
+	       
+		for(int row = boxStartRow; row < (boxStartRow + 3); row++){
+		    for(int column = boxStartColumn; column < (boxStartColumn + 3); column++){
+			buttonArray[row][column].setBackground(x);
+		    }
+	      
+		}
+		if (x==Color.pink){
+		    x = Color.white;
+		}
+		else{
+		    x = Color.pink;
+		}
+	    }
+	}
+    }
+
+
+    public boolean checkConstraints(){
+	for(int row = 0; row < 9; row++){
+	    int[] valueCounter = new int[10];
+	    for(int column = 0; column < 9; column++){
+		if(buttonArray[row][column].getValue()!= 0){
+		    valueCounter[buttonArray[row][column].getValue()] += 1;
+		}
+	    }
+	    for(int val=0;val<valueCounter.length; val++){
+		if (valueCounter[val]>1){
+		    return false;
+		}
+	    }	  
+	}
+	for(int column = 0; column < 9; column++){
+	    int[] valueCounter = new int[10];
+	    for(int row = 0; row < 9; row++){
+		if(buttonArray[row][column].getValue()!= 0){
+		    valueCounter[buttonArray[row][column].getValue()] += 1;
+
+		}
+	    }
+	    for(int val=0;val<valueCounter.length; val++){
+		if (valueCounter[val]>1){
+		    return false;
+		}
+	    }	 
+	}
+	for(int boxStartRow = 0; boxStartRow < 7; boxStartRow += 3){
+	    for(int boxStartColumn = 0; boxStartColumn < 7; boxStartColumn += 3){
+	       
+		int[] valueCounter = new int[10];
+		for(int row = boxStartRow; row < (boxStartRow + 3); row++){
+		    for(int column = boxStartColumn; column < (boxStartColumn + 3); column++){
+			if(buttonArray[row][column].getValue()!= 0){
+
+			    valueCounter[buttonArray[row][column].getValue()] += 1;
+			}
+		    }
+		}
+		for(int val=0;val<valueCounter.length; val++){
+		    if (valueCounter[val]>1){
+			return false;
+		    }
+		}	 
+	    }
+	}
+	return true;
+    }	         		   
+
+    public void addFile(String fileName) {
+        File f = new File(fileName);
+        Scanner sc=null;
+        try {
+            sc = new Scanner(f);
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("File "+fileName+" doesn't exist");
+            System.exit(1);
+        }
+        for (int r=0;r<height;r++) {
+            for (int c=0;c<width;c++) {
+                while (sc.hasNextInt()) {
+                    startLayout[r][c] = sc.nextInt();
+                }
+            }
+        }
+    }
+
+}
+
