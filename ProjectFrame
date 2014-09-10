@@ -1,0 +1,78 @@
+import java.awt.*;
+import javax.swing.*;
+
+public class ProjectFrame extends JFrame {
+
+    private int height;
+    private int width;
+    private JLabel message;
+    private int buttonCount;
+    private JButton[] buttons;
+    private String game;
+    private JPanel gamePanel = new JPanel();
+    private JButton jb4, jb5;
+
+    public ProjectFrame(String g, int h, int w, int bc){
+	height=h;
+	width=w;
+	game=g;
+	buttonCount=bc;
+	
+    }
+
+    public void init(){     
+
+
+	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+	Container ct = this.getContentPane();
+
+	
+	if (game.equals("Sudoku")){
+	    Sudoku SudokuGame = new Sudoku(gamePanel);
+	    jb4 = new SolveButton(SudokuGame);
+	    jb4.setText("Solver");
+
+	}
+	else if (game.equals("KenKen")){
+	    KenKen KenKenGame = new KenKen(gamePanel); 
+	    jb4 = new SolveButton(KenKenGame);
+	    jb4.setText("Solver");
+	}
+	else if (game.equals("SixPack")){
+	    SixPack SixPackGame = new SixPack(gamePanel);
+	    jb4 = new SolveButton(SixPackGame);
+	    jb4.setText("Solver");
+	}
+	jb5 = new SwitchButton(this);
+	jb5.setText("Switch Game");
+	JPanel optionPanel = new JPanel();
+	optionPanel.setLayout(new FlowLayout());
+	optionPanel.add(jb5);
+	optionPanel.add(jb4);
+	
+	ct.setLayout(new GridLayout(1, 1));
+	ct.setPreferredSize(new Dimension(600,600));
+	ct.add(optionPanel);
+	ct.add(gamePanel);
+	gamePanel.setLayout(new GridLayout(height,width));
+
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
