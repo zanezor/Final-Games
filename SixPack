@@ -1,0 +1,156 @@
+import java.awt.*;
+import javax.swing.*;
+import java.util.Vector;
+
+public class SixPack extends ProjectGame{
+    private JPanel gamePanel;
+    private int height=8;
+    private int width=9;
+    private int[][] gameLayout = {
+	{-1,-1,-1,0,1,7,-1,-1,-1},
+	{-1,-1, 0,0,8,0, 6,-1,-1},
+	{-1, 0, 6,0,1,0, 0, 8,-1},
+	{ 0, 4, 0,0,8,6, 0, 0, 8},
+	{ 0, 0, 0,0,2,0, 0, 6, 0},
+	{-1, 3, 0,8,0,1, 2, 0,-1},
+	{-1,-1, 0,0,3,0, 0,-1,-1},
+	{-1,-1,-1,0,9,1,-1,-1,-1}
+    };
+
+
+    private SixPackButton[][] buttonArray = new SixPackButton[8][9];
+    private SixPackButton[] emptySpots;
+    private int[] possibleValues = {1,2,3,4,5,6,7,8,9};
+    
+    public SixPack(JPanel gamePanel){
+	this.gamePanel = gamePanel;
+	this.createGameGrid();
+       	this.createSpots();
+    }
+
+    public PuzzleButton[] getEmpty(){
+	return this.emptySpots;
+    }
+
+    public int[] getPossibleValues(){
+	return this.possibleValues;
+    }
+
+    public void createSpots() {
+	int counter = 0;
+	for (int row=0; row<8; row++) {
+	    for(int col=0; col<9; col++) {		
+		if (buttonArray[row][col].getValue()==0) {
+		    counter++;
+		}
+	    }
+	}
+
+	emptySpots = new SixPackButton[counter];
+	int counter2 = 0;
+	for (int row=0; row<8; row++){
+	    for(int col=0; col<9; col++){		
+		if (buttonArray[row][col].getValue()==0){
+		    emptySpots[counter2]=buttonArray[row][col];
+		    counter2++;
+		}
+	    }
+	} 
+    }
+
+
+    public void createGameGrid(){
+	for (int row=0; row<8; row++) {
+	    for(int col=0; col<9; col++){ 
+		SixPackButton jb3 = new SixPackButton(gameLayout[row][col]);
+		if(gameLayout[row][col]==-1){
+		    jb3.setBackground(Color.black);
+		}
+		buttonArray[row][col] = jb3;
+		gamePanel.add(jb3);
+	    }
+	}
+    }
+ 
+    public boolean checkConstraints(){
+	if (buttonArray[0][3].getValue()+buttonArray[0][4].getValue()+buttonArray[0][5].getValue()+buttonArray[1][3].getValue()+buttonArray[1][4].getValue()+buttonArray[1][5].getValue()==25){//pass
+		}
+	else if ((buttonArray[0][3].getValue()!=0) && (buttonArray[0][4].getValue()!=0)&& (buttonArray[0][5].getValue()!=0)&& (buttonArray[1][3].getValue()!=0)&& (buttonArray[1][4].getValue()!=0)&&(buttonArray[1][5].getValue()!=0)){
+	    return false;
+	}
+		if (buttonArray[1][2].getValue()+buttonArray[1][3].getValue()+buttonArray[1][4].getValue()+buttonArray[2][2].getValue()+buttonArray[2][3].getValue()+buttonArray[2][4].getValue()==25){//pass
+		}
+		else if ((buttonArray[1][2].getValue()!=0) && (buttonArray[1][3].getValue()!=0)&& (buttonArray[1][4].getValue()!=0)&& (buttonArray[2][2].getValue()!=0)&& (buttonArray[2][3].getValue()!=0)&&(buttonArray[2][4].getValue()!=0)){
+	    return false;
+	}	if (buttonArray[1][4].getValue()+buttonArray[1][5].getValue()+buttonArray[1][6].getValue()+buttonArray[2][4].getValue()+buttonArray[2][5].getValue()+buttonArray[2][6].getValue()==25){//pass
+		}
+		else if ((buttonArray[1][4].getValue()!=0) && (buttonArray[1][5].getValue()!=0)&& (buttonArray[1][6].getValue()!=0)&& (buttonArray[2][4].getValue()!=0)&& (buttonArray[2][5].getValue()!=0)&&(buttonArray[2][6].getValue()!=0)){
+	    return false;
+		}	if (buttonArray[2][3].getValue()+buttonArray[2][4].getValue()+buttonArray[2][5].getValue()+buttonArray[3][3].getValue()+buttonArray[3][4].getValue()+buttonArray[3][5].getValue()==25){//pass
+		}
+		else if ((buttonArray[2][3].getValue()!=0) && (buttonArray[2][4].getValue()!=0)&& (buttonArray[2][5].getValue()!=0)&& (buttonArray[3][3].getValue()!=0)&& (buttonArray[3][4].getValue()!=0)&&(buttonArray[3][5].getValue()!=0)){
+	    return false;
+	}	if (buttonArray[2][1].getValue()+buttonArray[2][2].getValue()+buttonArray[2][3].getValue()+buttonArray[3][1].getValue()+buttonArray[3][2].getValue()+buttonArray[3][3].getValue()==25){//pass
+		}
+		else if ((buttonArray[2][1].getValue()!=0) && (buttonArray[2][2].getValue()!=0)&& (buttonArray[2][3].getValue()!=0)&& (buttonArray[3][1].getValue()!=0)&& (buttonArray[3][2].getValue()!=0)&&(buttonArray[3][3].getValue()!=0)){
+	    return false;
+	}	if (buttonArray[2][5].getValue()+buttonArray[2][6].getValue()+buttonArray[2][7].getValue()+buttonArray[3][5].getValue()+buttonArray[3][6].getValue()+buttonArray[3][7].getValue()==25){//pass
+		}
+		else if ((buttonArray[2][5].getValue()!=0) && (buttonArray[2][6].getValue()!=0)&& (buttonArray[2][7].getValue()!=0)&& (buttonArray[3][5].getValue()!=0)&& (buttonArray[3][6].getValue()!=0)&&(buttonArray[3][7].getValue()!=0)){
+	    return false;
+	}	if (buttonArray[3][0].getValue()+buttonArray[3][1].getValue()+buttonArray[3][2].getValue()+buttonArray[4][0].getValue()+buttonArray[4][1].getValue()+buttonArray[4][2].getValue()==25){//pass
+		}
+		else if ((buttonArray[3][0].getValue()!=0) && (buttonArray[3][1].getValue()!=0)&& (buttonArray[3][2].getValue()!=0)&& (buttonArray[4][0].getValue()!=0)&& (buttonArray[4][1].getValue()!=0)&&(buttonArray[4][2].getValue()!=0)){
+	    return false;
+	}	
+		if (buttonArray[3][2].getValue()+buttonArray[3][3].getValue()+buttonArray[3][4].getValue()+buttonArray[4][2].getValue()+buttonArray[4][3].getValue()+buttonArray[4][4].getValue()==25){//pass
+		}
+		else if ((buttonArray[3][2].getValue()!=0) && (buttonArray[3][3].getValue()!=0)&& (buttonArray[3][4].getValue()!=0)&& (buttonArray[4][2].getValue()!=0)&& (buttonArray[4][3].getValue()!=0)&&(buttonArray[4][4].getValue()!=0)){
+	    return false;
+	}	
+		if (buttonArray[3][4].getValue()+buttonArray[3][5].getValue()+buttonArray[3][6].getValue()+buttonArray[4][4].getValue()+buttonArray[4][5].getValue()+buttonArray[4][6].getValue()==25){//pass
+		}
+		else if ((buttonArray[3][4].getValue()!=0) && (buttonArray[3][5].getValue()!=0)&& (buttonArray[3][6].getValue()!=0)&& (buttonArray[4][4].getValue()!=0)&& (buttonArray[4][5].getValue()!=0)&&(buttonArray[4][6].getValue()!=0)){
+	    return false;
+	}	
+		if (buttonArray[3][6].getValue()+buttonArray[3][7].getValue()+buttonArray[3][8].getValue()+buttonArray[4][6].getValue()+buttonArray[4][7].getValue()+buttonArray[4][8].getValue()==25){//pass
+		}
+		else if ((buttonArray[3][6].getValue()!=0) && (buttonArray[3][7].getValue()!=0)&& (buttonArray[3][8].getValue()!=0)&& (buttonArray[4][6].getValue()!=0)&& (buttonArray[4][7].getValue()!=0)&&(buttonArray[4][8].getValue()!=0)){
+	    return false;
+	}	
+		if (buttonArray[4][1].getValue()+buttonArray[4][2].getValue()+buttonArray[4][3].getValue()+buttonArray[5][1].getValue()+buttonArray[5][2].getValue()+buttonArray[5][3].getValue()==25){//pass
+		}
+		else if ((buttonArray[4][1].getValue()!=0) && (buttonArray[4][2].getValue()!=0)&& (buttonArray[4][3].getValue()!=0)&& (buttonArray[5][1].getValue()!=0)&& (buttonArray[5][2].getValue()!=0)&&(buttonArray[5][3].getValue()!=0)){
+	    return false;
+	}	
+		if (buttonArray[4][3].getValue()+buttonArray[4][4].getValue()+buttonArray[4][5].getValue()+buttonArray[5][3].getValue()+buttonArray[5][4].getValue()+buttonArray[5][5].getValue()==25){//pass
+		}
+		else if ((buttonArray[4][3].getValue()!=0) && (buttonArray[4][4].getValue()!=0)&& (buttonArray[4][5].getValue()!=0)&& (buttonArray[5][3].getValue()!=0)&& (buttonArray[5][4].getValue()!=0)&&(buttonArray[5][5].getValue()!=0)){
+	    return false;
+	}	
+		if (buttonArray[4][5].getValue()+buttonArray[4][6].getValue()+buttonArray[4][7].getValue()+buttonArray[5][5].getValue()+buttonArray[5][6].getValue()+buttonArray[5][7].getValue()==25){//pass
+		}
+		else if ((buttonArray[4][5].getValue()!=0) && (buttonArray[4][6].getValue()!=0)&& (buttonArray[4][7].getValue()!=0)&& (buttonArray[5][5].getValue()!=0)&& (buttonArray[5][6].getValue()!=0)&&(buttonArray[5][7].getValue()!=0)){
+	    return false;
+	}	if (buttonArray[5][2].getValue()+buttonArray[5][3].getValue()+buttonArray[5][4].getValue()+buttonArray[6][2].getValue()+buttonArray[6][3].getValue()+buttonArray[6][4].getValue()==25){//pass
+		}
+		else if ((buttonArray[5][2].getValue()!=0) && (buttonArray[5][3].getValue()!=0)&& (buttonArray[5][4].getValue()!=0)&& (buttonArray[6][2].getValue()!=0)&& (buttonArray[6][3].getValue()!=0)&&(buttonArray[6][4].getValue()!=0)){
+	    return false;
+	}	
+		if (buttonArray[5][4].getValue()+buttonArray[5][5].getValue()+buttonArray[5][6].getValue()+buttonArray[6][4].getValue()+buttonArray[6][5].getValue()+buttonArray[6][6].getValue()==25){//pass
+		}
+		else if ((buttonArray[5][4].getValue()!=0) && (buttonArray[5][5].getValue()!=0)&& (buttonArray[5][6].getValue()!=0)&& (buttonArray[6][4].getValue()!=0)&& (buttonArray[6][5].getValue()!=0)&&(buttonArray[6][6].getValue()!=0)){
+	    return false;
+	}	
+		if (buttonArray[6][3].getValue()+buttonArray[6][4].getValue()+buttonArray[6][5].getValue()+buttonArray[7][3].getValue()+buttonArray[7][4].getValue()+buttonArray[7][5].getValue()==25){//pass
+		}
+		else if ((buttonArray[6][3].getValue()!=0) && (buttonArray[6][4].getValue()!=0)&& (buttonArray[6][5].getValue()!=0)&& (buttonArray[7][3].getValue()!=0)&& (buttonArray[7][4].getValue()!=0)&&(buttonArray[7][5].getValue()!=0)){
+	    return false;
+	}
+	
+	
+	return true;
+    }
+}
+
+
