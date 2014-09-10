@@ -1,0 +1,38 @@
+import java.awt.*;
+import javax.swing.*;
+
+public class MenuFrame extends JFrame {
+
+    private JLabel message;
+
+
+
+    public MenuFrame (){
+    }
+
+    public void init() {
+
+	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+	Container ct = getContentPane();
+
+	ct.setPreferredSize(new Dimension(600,300));
+
+	ct.setLayout(new GridLayout(4, 1));
+
+
+	message = new JLabel ("Pick a game:");
+	ct.add(message);
+
+
+	JButton jb = new MenuButtons("Sudoku");
+	ct.add(jb);
+
+	JButton jb2 = new MenuButtons("KenKen");
+	ct.add(jb2);
+
+	JButton jb3 = new MenuButtons("SixPack");
+	ct.add(jb3);
+
+    }
+}
