@@ -1,0 +1,47 @@
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+
+public class SudokuButton extends PuzzleButton implements ActionListener{
+    private int value;
+    private boolean permanent=false;
+
+    public SudokuButton(int x) {
+	value = x;
+	this.addActionListener(this);
+	if (x!=0) {
+	    this.setEnabled(false);
+	}
+    }
+    
+    public void paintComponent(Graphics g){
+	super.paintComponent(g);
+	String s = Integer.toString(value);
+	if (value!=0){	    
+	    this.setText(s);
+	}
+	if (value == 0){
+	    this.setText("");
+	}
+    }
+
+    public int getValue(){
+	return this.value;
+    }
+
+    public void setValue(int value){
+	this.value = value;
+	this.repaint();
+    }
+
+    public void actionPerformed(ActionEvent e) {
+	if (value < 9){
+	    value += 1;
+	}
+	else value = 0;
+	this.repaint();    
+    }
+}
