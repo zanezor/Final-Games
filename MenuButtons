@@ -1,0 +1,51 @@
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import java.awt.*;
+
+public class MenuButtons extends JButton implements ActionListener{
+    
+    private String game;
+
+    public MenuButtons(String g) {
+	game = g; 
+	this.addActionListener(this);
+    }
+
+    public void paintComponent(Graphics g){
+	super.paintComponent(g);
+	g.drawString(game, 50, 60);
+    } 
+
+    public void actionPerformed(ActionEvent e){
+    	if (game.equals("Sudoku")){
+    	    ProjectFrame frame = new ProjectFrame("Sudoku", 9, 9, 81);
+    	    frame.init();
+ 	    frame.setPreferredSize(new Dimension(1000,500));
+    	    frame.repaint();	
+    	    frame.pack();
+    	    frame.setVisible(true);
+   
+    	}
+	else if (game.equals("KenKen")){
+	    ProjectFrame frame = new ProjectFrame("KenKen", 4, 4,16);
+	    frame.init();
+	    frame.setPreferredSize(new Dimension(1000,500));
+	    frame.repaint();	
+	    frame.pack();
+	    frame.setVisible(true);	
+	}
+	else if (game.equals("SixPack")) {
+	    ProjectFrame frame = new ProjectFrame("SixPack", 8, 9, 72);
+	    frame.init();
+	    frame.setPreferredSize(new Dimension(1000,500));
+	    frame.repaint();	
+	    frame.pack();
+	    frame.setVisible(true);
+	}	
+    }
+}
