@@ -1,0 +1,28 @@
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import java.awt.*;
+
+public class SwitchButton extends PuzzleButton implements ActionListener{
+
+    private ProjectFrame frame2;
+
+    public SwitchButton(ProjectFrame f){
+	frame2 = f;
+	this.addActionListener(this);
+    }
+
+    public void actionPerformed (ActionEvent e){
+	MenuFrame frame = new MenuFrame();
+	frame.init();
+	frame.repaint();	
+	frame.pack();
+	frame.setVisible(true);
+	frame2.dispose();
+    }
+
+
+}
