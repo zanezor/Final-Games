@@ -1,0 +1,75 @@
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import java.awt.Graphics;
+
+public class KenKenButton extends PuzzleButton implements ActionListener {
+    private int value;
+    private int goal;
+    private int cage;
+    private String operation;
+    private boolean permanent=false;
+    
+    public KenKenButton(int x) {
+	value=x;
+	this.addActionListener(this);
+	if (x!=0) {
+	    this.setEnabled(false);
+	}
+    }
+    
+    public void paintComponent(Graphics g){
+	super.paintComponent(g);
+	String s = Integer.toString(value);
+	if (value!=0){	    
+	    this.setText(s);
+	}
+	if (value == 0){
+	    this.setText("");
+	}
+	String putInCorner = ""+goal+operation;
+	g.drawString(putInCorner,10,10);
+    }
+
+    public int getValue(){
+	return this.value;
+    }
+
+    public void setValue(int value){
+	this.value = value;
+	this.repaint();
+    }
+
+    public void setCageIdentifier(int cage){
+	this.cage = cage;
+    }
+    public int getCageIdentifier(){
+	return this.cage;
+    }
+
+    public void setGoalNumber(int goal){
+	this.goal = goal;
+    }
+    public int getGoalNumber(){
+	return this.goal;
+    }
+
+    public void setOperation(String operation){
+	this.operation = operation;
+    }
+
+    public String getOperation(){
+	return this.operation;
+    }
+	
+    public void actionPerformed(ActionEvent e) {
+	if (value < 4){
+	    value += 1;
+	}
+	else value = 0;
+	this.repaint();    
+    }
+}
