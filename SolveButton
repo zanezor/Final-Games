@@ -1,0 +1,36 @@
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import java.awt.*;
+
+public class SolveButton extends PuzzleButton implements ActionListener{
+
+    private ProjectGame game;
+    private PuzzleButton[] emptySpots;
+    private int[] possibleValues;
+    private int[][] startLayout;
+    private PuzzleButton[][] buttonArray;
+
+    public SolveButton(ProjectGame g) {
+	game = g; 
+	emptySpots = g.getEmpty();
+	possibleValues = g.getPossibleValues();
+	this.addActionListener(this);
+	startLayout = g.getStartLayout();
+	buttonArray = g.getButtonArray();
+    }
+
+
+    public void actionPerformed(ActionEvent e){
+	
+	for ( int i = 0; i < startLayout.length; i++){
+	    for ( int j = 0; j < startLayout[0].length; j++){
+		buttonArray[i][j].setValue(startLayout[i][j]);}}
+	game.Solver(game, emptySpots, possibleValues, 0);
+	
+    }
+
+}
